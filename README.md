@@ -2,7 +2,7 @@
 
 Educational Ada 2023 **umbrella / survey** package for
 [Wikipedia: Hidden Markov model](https://en.wikipedia.org/wiki/Hidden_Markov_model).
-A discrete **HMM** pairs a hidden Markov chain \(X_t\) with emissions \(Y_t\)
+A discrete **HMM** pairs a hidden Markov chain $X_t$ with emissions $Y_t$
 that depend only on the current hidden state. Classic inference tasks are
 likelihood of observations, filtering, smoothing, the most likely state
 path, and learning parameters from data.
@@ -23,13 +23,13 @@ Language: **Ada 2023** (ISO/IEC 8652:2023), compiled with GNAT (`-gnat2022`).
 
 | Inference / task | Approach | Notes |
 | --- | --- | --- |
-| **Definition** | `HMM` (\(N\), \(M\), \(\pi\), \(A\), \(B\)) | Discrete states & symbols |
+| **Definition** | `HMM` ($N$, $M$, $\pi$, $A$, $B$) | Discrete states & symbols |
 | **Validation** | `Is_Valid_HMM` / `Normalize_Rows` / `Near` | Stochastic row checks |
 | **Generation** | `Sample_Path` / `Sample_Observations` | Seeded LCG |
-| **Likelihood** | `Log_Likelihood` / `Likelihood` | Scaled forward (\(c_t\)) |
-| **Filtering** | `Filter` | \(P(X_t \mid o_{1:t})\) = scaled \(\alpha_t\) |
-| **Smoothing** | `Smooth` / `Forward_Backward` | \(\gamma_t\), optional \(\xi\) |
-| **MAP marginal path** | `Posterior_Mode_Path` | \(\arg\max_i \gamma_t(i)\) |
+| **Likelihood** | `Log_Likelihood` / `Likelihood` | Scaled forward ($c_t$) |
+| **Filtering** | `Filter` | $P(X_t \mid o_{1:t})$ = scaled $\alpha_t$ |
+| **Smoothing** | `Smooth` / `Forward_Backward` | $\gamma_t$, optional $\xi$ |
+| **MAP marginal path** | `Posterior_Mode_Path` | $\arg\max_i \gamma_t(i)$ |
 | **Most likely path** | `Viterbi_Decode` / `Viterbi_Decode_Log` | Product / log-domain DP |
 | **Learning** | `Baum_Welch_Fit` | EM; Max_Iter / Tol → `Fit_Result` |
 | **Fixture** | `Make_Doctor_Fever_HMM` | Wikipedia Healthy / Fever |
@@ -53,8 +53,8 @@ embedded compactly for the umbrella topic.
 | Hygiene | `Is_Valid_HMM`, `Normalize_Rows`, `Near`, `Log`, `Exp` | Contracts / numerics |
 | Init | `Make_Doctor_Fever_HMM`, `Random_Init_HMM` | Fixtures / EM start |
 | Sample | `Sample_Path`, `Sample_Observations` | Synthetic data |
-| Likelihood | `Log_Likelihood`, `Likelihood` | \(P(o)\), \(\log P(o)\) |
-| Filter / smooth | `Filter`, `Smooth`, `Forward_Backward` | \(\alpha\), \(\gamma\), \(\xi\) |
+| Likelihood | `Log_Likelihood`, `Likelihood` | $P(o)$, $\log P(o)$ |
+| Filter / smooth | `Filter`, `Smooth`, `Forward_Backward` | $\alpha$, $\gamma$, $\xi$ |
 | Mode | `Posterior_Mode_Path` | Marginal MAP path |
 | Viterbi | `Viterbi_Decode`, `Viterbi_Decode_Log`, `Path_Probability` | Joint MAP path |
 | EM | `Baum_Welch_Fit` | Parameter learning |
@@ -70,11 +70,11 @@ Named exceptions: `Invalid_Argument`, `Degenerate_Geometry`,
 
 | Task | Algorithm | Output |
 | --- | --- | --- |
-| **Most likely path** | Viterbi | \(\arg\max_{x_{1:T}} P(x_{1:T}, o_{1:T})\) |
-| **Per-time posteriors** | Forward–backward | \(\gamma_t(i)=P(X_t=i\mid o_{1:T})\) |
+| **Most likely path** | Viterbi | $\arg\max_{x_{1:T}} P(x_{1:T}, o_{1:T})$ |
+| **Per-time posteriors** | Forward–backward | $\gamma_t(i)=P(X_t=i\mid o_{1:T})$ |
 
 The sequence of individually most probable states
-\(\arg\max_i\gamma_t(i)\) (`Posterior_Mode_Path`) is a **MAP marginal
+$\arg\max_i\gamma_t(i)$ (`Posterior_Mode_Path`) is a **MAP marginal
 path**. It can differ from the Viterbi path because marginal modes ignore
 joint path constraints. On the classic doctor/fever example they coincide.
 
@@ -117,7 +117,7 @@ FB    : constant FB_Result := Forward_Backward (Model, Obs);
 - Wikipedia doctor/fever Viterbi path and known probability 0.01512
 - Viterbi beats alternate paths; path scoring
 - Scaled-forward likelihood finite / matches wiki order
-- Filter and Smooth \(\gamma\) row sums
+- Filter and Smooth $\gamma$ row sums
 - Posterior mode vs Viterbi (coincide on fixture; may differ in general)
 - Sampling reproducibility
 - Baum–Welch likelihood increase and sample+refit sanity
